@@ -1,0 +1,134 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id  String   @id
+  email String @unique
+  password String
+  roleId  String?
+  role Role? @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  userType UserType @default(EMPLOYEE)
+
+  deletedAt DateTime?
+  isDeleted Boolean @default(false)
+  profile Profile?
+  leads Leads[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Profile {
+  id            String  @id @default(cuid())
+  userId        String  @unique
+  firstName     String
+  lastName      String?
+  profileImg    String?
+  employeeId    String? @unique
+  designation   String
+  address       String?
+  contactNumber String
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@map("profiles")
+}
+
+model Permission {
+  id              String           @id @default(cuid())
+  name            String           @unique
+  action          AuthAction?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @default(now()) @updatedAt
+  rolePermissions RolePermission[]
+
+  @@map("permissions")
+}
+
+model Role {
+  id          String           @id @default(cuid())
+  name        String           @unique
+  description String?
+  users       User[]
+  permissions RolePermission[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+model RolePermission {
+  id           String     @id @default(cuid())
+  roleId       String
+  permissionId String
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@unique([roleId, permissionId])
+}
+
+model Leads {
+  id            String    @id @default(cuid())
+  name          String?
+  phone         String  @unique
+  address       String?
+  batchName     String?
+  source        String?
+  status        String?
+  items         String[]
+  price         Int
+  assignedToId  String? 
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  user User? @relation(fields: [assignedToId], references: [id])
+  
+  @@map("leads")
+  @@index([assignedToId])
+}
+
+
+
+
+
+
+enum UserType {
+  EMPLOYEE
+  ADMIN
+}
+
+enum AuthAction {
+  CREATE
+  EDIT
+  VIEW
+  DELETE
+  ALL
+}
+
+enum OrderStatus {
+  CONFIRMED
+  PENDING
+  CANCELLED
+  COMMENT
+  SHIP_LATER
+  DELIVERED
+  RETURNED
+}
