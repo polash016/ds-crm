@@ -1,0 +1,41 @@
+{
+  "tailwindCSS.emmetCompletions": true,
+  "workbench.colorTheme": "Kanagawa",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "tabnine.experimentalAutoImports": true,
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "liveServer.settings.AdvanceCustomBrowserCmdLine": "",
+  "tailwindCSS.experimental.classRegex": [],
+  "files.autoGuessEncoding": true,
+  "files.associations": {
+    "": "",
+    "\"*.css\"": "\"tailwindcss\""
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "Codegeex.Privacy": true,
+  "workbench.iconTheme": "material-icon-theme",
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "Codegeex.Comment.LanguagePreference": "English",
+  "window.titleBarStyle": "custom",
+  "explorer.confirmDelete": false,
+  "Codegeex.Chat.LanguagePreference": "English",
+  "terminal.integrated.env.linux": {},
+  "database-client.autoSync": true,
+  "terminal.external.linuxExec": "warp-terminal",
+  "workbench.editor.empty.hint": "hidden",
+  "remote.portsAttributes": {
+    "5173": {
+      "protocol": "http"
+    }
+  }
+}
